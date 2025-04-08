@@ -17,15 +17,15 @@ Pruebas de Software - Tarea 1
 - Realizar revisiones: Ejemplo en Scrum, con un sprint review, podemos mostrarle al cliente las funcionalidades implementadas y obtener un feedback con detalles a corregir.
 
 
-5. Organización, explicar cómo se organizó el proyecto y el flujo de trabajo de éste.
+3. Organización, explicar cómo se organizó el proyecto y el flujo de trabajo de éste.
 La estructura del proyecto se realiza en una estructura basada en Cliente-Servidor.
 - db_functions.py: Conexión con base de datos y queries con la lógica de negocio.
 - main.py: Archivo principal con interfaz en consola con la aplicación de gestión de inventario.
 
-6. Incluir evidencia de flujo de trabajo y configuraciones realizadas (Imágenes de pantalla).
+4. Incluir evidencia de flujo de trabajo y configuraciones realizadas (Imágenes de pantalla).
 
 
-7. Problemas encontrados y como se solucionaron.
+5. Problemas encontrados y como se solucionaron.
 - **Falta de claridad con la categoría**: Al crear un producto se puede colocar cualquier categoría.
   - **Sol:** El usuario debe crear la categoría antes de crear un producto; si crea un producto con una categoría que no existe, no se acepta.
 
