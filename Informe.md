@@ -37,3 +37,13 @@ La estructura del proyecto se realiza en una estructura basada en Cliente-Servid
 
 - **Registro de stocks**: No vender más productos de los que existen actualmente.
   - **Sol"** Realizar una verificación previa de que el stock esté disponible; además, se guardará un registro de los últimos registros de compra/venta.
+
+**3.3) Pruebas**
+
+- **Definir estrategias de pruebas**
+  - *¿Cómo vamos a probar?* Se realizarán diferentes inputs estratégicos para probar la robustez del programa.
+  - *¿Quién prueba qué?* Debido a la falta de personal, ambos probaremos diferentes inputs los cuales delimitaremos en un previo acuerdo, con el fin de que ninguno pruebe algo que el otro ya probó
+  - *¿Haremos pruebas cruzadas?* Las pruebas se harán de manera individual, sin embargo, reportaremos los resultados de manera telemática una vez realizadas.
+
+**Definición de pruebas**
+  -  La estructura de las pruebas serán tal cual se expuso en el enunciado con un *id_test, entrada, resultado esperado, resultado obtenido, fallo o éxito* y *comentarios adicionales*.
