@@ -4,6 +4,8 @@ Pruebas de Software - Tarea 1
 - Daniel Villarroel
 - Gonzalo Severín
 
+**3.1) Aspectos formales**
+
 1. ¿Cómo especificarías mejor el requerimiento? (Validación)
 
 - **Realizar reuniones con el cliente**: Para aclarar algunas necesidades de los requerimientos entregados, por ejemplo, no queda claro cómo podríamos exportar el reporte, como usar Excel o un PDF.
@@ -35,3 +37,25 @@ La estructura del proyecto se realiza en una estructura basada en Cliente-Servid
 
 - **Registro de stocks**: No vender más productos de los que existen actualmente.
   - **Sol"** Realizar una verificación previa de que el stock esté disponible; además, se guardará un registro de los últimos registros de compra/venta.
+
+**3.3) Pruebas**
+
+- **Definir estrategias de pruebas**
+  - *¿Cómo vamos a probar?* Se realizarán diferentes inputs estratégicos para probar la robustez del programa.
+  - *¿Quién prueba qué?* Debido a la falta de personal, ambos probaremos diferentes inputs los cuales delimitaremos en un previo acuerdo, con el fin de que ninguno pruebe algo que el otro ya probó
+  - *¿Haremos pruebas cruzadas?* Las pruebas se harán de manera individual, sin embargo, reportaremos los resultados de manera telemática una vez realizadas.
+
+**Definición de pruebas**
+  -  La estructura de las pruebas serán tal cual se expuso en el enunciado con un *id_test, entrada, resultado esperado, resultado obtenido, fallo o éxito* y *comentarios adicionales*.
+
+**Preparación y ejecución de Pruebas:**
+
+**Ciclo de pruebas 1 (Primera ejecución de conjunto de pruebas):**
+  - Se comprobará el correcto funcionamiento  del CRUD, con diferentes productos ficticios, se evaluará cómo se comporta el programa con un uso normal.
+  - Se hará lo propio con la gestión del stock, el filtrado de búsquedas y la generación de reportes.
+
+**Ciclo de pruebas 2 (Segunda ejecución de conjunto de pruebas):**
+  - Se harán pruebas para forzar entradas no convencionales: estructuras de datos distintas a las esperadas, datos irreales, cadenas de texto muy largas y entradas de cadenas de texto nulas.
+
+**Ciclo de pruebas 3 (Solo en caso de ser necesario):**
+  - Se realizarán pruebas similares a los anteriores en caso de actualizaciones del programa, de modo de probar si las actualizaciones son favorables o hacen a la aplicación más inestable.
