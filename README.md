@@ -27,10 +27,10 @@ La estructura del proyecto se realiza en una estructura basada en Cliente-Servid
 
 7. Problemas encontrados y como se solucionaron.
 - **Falta de claridad con la categoría**: Al crear un producto se puede colocar cualquier categoría.
-  - (Sol) El usuario debe crear la categoría antes de crear un producto; si crea un producto con una categoría que no existe, no se acepta.
+  - **Sol** El usuario debe crear la categoría antes de crear un producto; si crea un producto con una categoría que no existe, no se acepta.
 
 - **Productos duplicados**: Puedo crear 2 productos con el mismo nombre, pero puede existir problemas al actualizarlo.
-  - (Sol) El nombre debe ser único; no se puede aceptar 2 productos con el mismo nombre. Esto soluciona problemas al realizar compra/venta.
+  - **Sol** El nombre debe ser único; no se puede aceptar 2 productos con el mismo nombre. Esto soluciona problemas al realizar compra/venta.
 
 - **Registro de stocks**: No vender más productos de los que existen actualmente.
-  - (Sol) Realizar una verificación previa de que el stock esté disponible; además, se guardará un registro de los últimos registros de compra/venta.
+  - **Sol** Realizar una verificación previa de que el stock esté disponible; además, se guardará un registro de los últimos registros de compra/venta.
