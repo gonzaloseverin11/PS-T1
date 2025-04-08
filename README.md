@@ -18,6 +18,7 @@ Pruebas de Software - Tarea 1
 
 
 3. Organización, explicar cómo se organizó el proyecto y el flujo de trabajo de éste.
+
 La estructura del proyecto se realiza en una estructura basada en Cliente-Servidor.
 - db_functions.py: Conexión con base de datos y queries con la lógica de negocio.
 - main.py: Archivo principal con interfaz en consola con la aplicación de gestión de inventario.
