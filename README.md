@@ -2,7 +2,7 @@ Gonzalo Severin y Daniel Villarroel
 
 Gestión de Inventario para Pequeñas Empresas es una aplicación desarrollada en Python. 
 Esta herramienta permite simular el funcionamiento de un sistema de control de inventario de forma sencilla, utilizando una base 
-de datos local SQLite. Su objetivo es facilitar la administración de productos para pequeños negocios o proyectos personales.
+de datos local SQLite. Su objetivo es simular la administración de productos de una pequeña empresa.
 
 Versión de Python 3.12
 
