@@ -6,8 +6,8 @@ Pruebas de Software - Tarea 1
 
 1. ¿Cómo especificarías mejor el requerimiento? (Validación)
 
-- Realizar reuniones con el cliente: Para aclarar algunas necesidades de los requerimientos entregados, por ejemplo, no queda claro cómo podríamos exportar el reporte, como usar Excel o un PDF.
-- Realizar historias de usuario con criterios de aceptación claros: Crear una historia de usuario y en esta incluir diferentes criterios de aceptación para saber cuál es el flujo esperado en cada historia.
+- **Realizar reuniones con el cliente**: Para aclarar algunas necesidades de los requerimientos entregados, por ejemplo, no queda claro cómo podríamos exportar el reporte, como usar Excel o un PDF.
+- **Realizar historias de usuario con criterios de aceptación claros**: Crear una historia de usuario y en esta incluir diferentes criterios de aceptación para saber cuál es el flujo esperado en cada historia.
 
   
 2. ¿Cómo asegurarías que el programa cumpla el requerimiento? (Verificación)
@@ -26,11 +26,11 @@ La estructura del proyecto se realiza en una estructura basada en Cliente-Servid
 
 
 7. Problemas encontrados y como se solucionaron.
-- Falta de claridad con la categoría: Al crear un producto se puede colocar cualquier categoría.
-El usuario debe crear la categoría antes de crear un producto; si crea un producto con una categoría que no existe, no se acepta.
+- **Falta de claridad con la categoría**: Al crear un producto se puede colocar cualquier categoría.
+- - El usuario debe crear la categoría antes de crear un producto; si crea un producto con una categoría que no existe, no se acepta.
 
-- Productos duplicados: Puedo crear 2 productos con el mismo nombre, pero puede existir problemas al actualizarlo.
-El nombre debe ser único; no se puede aceptar 2 productos con el mismo nombre. Esto soluciona problemas al realizar compra/venta.
+- **Productos duplicados**: Puedo crear 2 productos con el mismo nombre, pero puede existir problemas al actualizarlo.
+- - El nombre debe ser único; no se puede aceptar 2 productos con el mismo nombre. Esto soluciona problemas al realizar compra/venta.
 
-- Registro de stocks: No vender más productos de los que existen actualmente.
-Realizar una verificación previa de que el stock esté disponible; además, se guardará un registro de los últimos registros de compra/venta.
+- **Registro de stocks**: No vender más productos de los que existen actualmente.
+- - Realizar una verificación previa de que el stock esté disponible; además, se guardará un registro de los últimos registros de compra/venta.
