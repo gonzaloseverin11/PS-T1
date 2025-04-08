@@ -8,6 +8,8 @@ DATABASE_NAME = "inventario.db"
 
 def main():
 
+    db.create_database(DATABASE_NAME)
+
     #Preguntar al usuario si desea cargar los productos simulados
     cargar_simulados = input("¿Desea cargar productos simulados? (s/n): ").strip().lower()
     if cargar_simulados == "s":
@@ -18,8 +20,6 @@ def main():
     print("REGISTRO DE INVENTARIO DE PRODUCTOS")
     print("Bienvenido al sistema de gestión de inventario.")
     print("Inicia sesión para continuar.")
-
-    db.create_database(DATABASE_NAME)
 
     # Inicio de sesión o registro
     while True:
