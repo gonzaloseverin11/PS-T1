@@ -27,8 +27,42 @@ La estructura del proyecto se realiza en una estructura basada en Cliente-Servid
 
 4. Incluir evidencia de flujo de trabajo y configuraciones realizadas (Imágenes de pantalla).
 
+### Evidencia del flujo de trabajo
 
-5. Problemas encontrados y como se solucionaron.
+#### 1. Inicio del programa
+![Inicio del programa](img/Inicio.png)
+
+#### 2. Inicio de sesión
+![Registro](img/Login.png)
+
+#### 3. Menu
+![Login](img/Menu.png)
+
+#### 4. Agregar producto
+![Menú principal](img/1.png)
+
+#### 5. Mostrar productos
+![Agregar producto](img/2.png)
+
+#### 6. Modificar productos
+![Mostrar productos](img/3.png)
+
+#### 7. Eliminar producto generado
+![Reporte](img/4.png)
+
+#### 8. Comprar productos
+![Reporte](img/5.png)
+
+#### 9. Vender productos
+![Reporte](img/6.png)
+
+#### 10. Reportes
+![Reporte](img/8.png)
+
+#### 11. Movimientos
+![Reporte](img/9.png)
+
+6. Problemas encontrados y como se solucionaron.
 - **Falta de claridad con la categoría**: Al crear un producto se puede colocar cualquier categoría.
   - **Sol:** El usuario debe crear la categoría antes de crear un producto; si crea un producto con una categoría que no existe, no se acepta.
 
