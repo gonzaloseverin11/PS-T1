@@ -53,9 +53,7 @@ La estructura del proyecto se realiza en una estructura basada en Cliente-Servid
 **Ciclo de pruebas 1 (Primera ejecución de conjunto de pruebas):**
   - Se comprobará el correcto funcionamiento  del CRUD, con diferentes productos ficticios, se evaluará cómo se comporta el programa con un uso normal.
   - Se hará lo propio con la gestión del stock, el filtrado de búsquedas y la generación de reportes.
+  - Si la ejecucion falla registrar la informacion entregada de la consola
 
 **Ciclo de pruebas 2 (Segunda ejecución de conjunto de pruebas):**
-  - Se harán pruebas para forzar entradas no convencionales: estructuras de datos distintas a las esperadas, datos irreales, cadenas de texto muy largas y entradas de cadenas de texto nulas.
-
-**Ciclo de pruebas 3 (Solo en caso de ser necesario):**
-  - Se realizarán pruebas similares a los anteriores en caso de actualizaciones del programa, de modo de probar si las actualizaciones son favorables o hacen a la aplicación más inestable.
+  - Se haran pruebas corrigiendo los errores del primer ciclo, como el segundo ciclo cumplio no fue necesario una tercera fase de pruebas
