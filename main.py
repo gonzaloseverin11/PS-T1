@@ -101,7 +101,6 @@ def main():
             nombre_producto = input("Nombre del producto a vender: ").strip()
             cantidad = int(input("Cantidad a vender: ").strip())
             db.vender_producto(DATABASE_NAME, nombre_producto, cantidad)
-            break
         elif choice == "7":
             print("\nBUSCAR PRODUCTO")
             db.filtrar_productos(DATABASE_NAME)

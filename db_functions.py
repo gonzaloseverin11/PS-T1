@@ -1,6 +1,15 @@
 import sqlite3
 import hashlib
 import pandas as pd
+import logging
+
+logging.basicConfig(
+    filename='db_operations.log',  # Archivo donde se guardan los logs
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
 
 
 def create_database(nombre_db):
@@ -15,6 +24,7 @@ def create_database(nombre_db):
     """
     conexion = sqlite3.connect(nombre_db)
     cursor = conexion.cursor()
+    logging.info(f"Conectado a la base de datos: {nombre_db}")
 
     # Tabla de usuarios
     cursor.execute('''
@@ -24,6 +34,8 @@ def create_database(nombre_db):
             contrasena TEXT NOT NULL
         )
     ''')
+    logging.info("Tabla 'usuarios' creada o ya existe.")
+    
 
     # Tabla de categorías
     cursor.execute('''
@@ -32,6 +44,7 @@ def create_database(nombre_db):
             nombre TEXT UNIQUE NOT NULL
         )
     ''')
+    logging.info("Tabla 'categorias' creada o ya existe.")
 
     # Tabla de productos (con relación a categorías)
     cursor.execute('''
@@ -45,6 +58,7 @@ def create_database(nombre_db):
             FOREIGN KEY (categoria_id) REFERENCES categorias(id)
         )
     ''')
+    logging.info("Tabla 'productos' creada o ya existe.")
 
      # Tabla movimientos
     cursor.execute('''
@@ -57,6 +71,7 @@ def create_database(nombre_db):
             momento INTEGER NOT NULL
         )
     ''')
+    logging.info("Tabla 'movimientos' creada o ya existe.")
 
     conexion.commit()
     conexion.close()
@@ -93,6 +108,7 @@ def insertar_categorias(nombre_db):
         except sqlite3.IntegrityError:
             # Ya existe la categoría, la ignoramos
             pass
+    logging.info("Categorías de ejemplo insertadas")
 
     conexion.commit()
     conexion.close()
@@ -112,11 +128,14 @@ def mostrar_categorias(nombre_db):
 
     cursor.execute("SELECT * FROM categorias")
     categorias = cursor.fetchall()
+    logging.info("Categorías consultadas")
 
     if not categorias:
         print("No hay categorías disponibles.")
+        logging.warning("No hay categorías disponibles.")
     else:
         print("Categorías disponibles:")
+        logging.info("Categorías disponibles")
         for i, categoria in enumerate(categorias):
             print(f"{i + 1}. {categoria[1]}")
 
@@ -139,6 +158,7 @@ def insertar_usuario(nombre_db, nombre_usuario, contrasena):
 
     # Hashear la contraseña
     contrasena_hash = hashlib.sha256(contrasena.encode()).hexdigest()
+    logging.info(f"Insertando usuario: {nombre_usuario}")
 
     # Insertar el usuario en la base de datos
     try:
@@ -148,8 +168,10 @@ def insertar_usuario(nombre_db, nombre_usuario, contrasena):
         )
         conexion.commit()
         print("Registro exitoso. Ahora puede iniciar sesión.")
+        logging.info(f"Usuario '{nombre_usuario}' registrado exitosamente.")
     except sqlite3.IntegrityError:
         print(f"El nombre de usuario '{nombre_usuario}' ya existe. Por favor, elige otro.")
+        logging.warning(f"El nombre de usuario '{nombre_usuario}' ya existe.")
     finally:
         conexion.close()
 
@@ -170,7 +192,7 @@ def iniciar_sesion(nombre_db, nombre_usuario, contrasena):
 
     # Hashear la contraseña ingresada
     contrasena_hash = hashlib.sha256(contrasena.encode()).hexdigest()
-
+    logging.info(f"Intentando iniciar sesión con usuario: {nombre_usuario}")
     # Verificar las credenciales
     cursor.execute(
         "SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ?",
@@ -180,9 +202,11 @@ def iniciar_sesion(nombre_db, nombre_usuario, contrasena):
 
     if usuario:
         print(f"Bienvenido, {nombre_usuario}! Has iniciado sesión correctamente.")
+        logging.info(f"Usuario '{nombre_usuario}' ha iniciado sesión.")
         return True
     else:
         print("Nombre de usuario o contraseña incorrectos.")
+        logging.warning(f"Intento de inicio de sesión fallido para el usuario '{nombre_usuario}'.")
         return False
     
 def insertar_producto(nombre_db, nombre_producto, descripcion, cantidad, precio, categoria_nombre):
@@ -202,12 +226,13 @@ def insertar_producto(nombre_db, nombre_producto, descripcion, cantidad, precio,
     """
     conexion = sqlite3.connect(nombre_db)
     cursor = conexion.cursor()
-
+    logging.info(f"Conectado a la base de datos: {nombre_db} para insertar producto")
     #Revisar si la categoría existe
     cursor.execute("SELECT id FROM categorias WHERE nombre = ?", (categoria_nombre,))
     categoria = cursor.fetchone()
     
     if not categoria:
+        logging.warning(f"La categoría '{categoria_nombre}' no existe.")
         print(f"La categoría '{categoria_nombre}' no existe.")
         conexion.close()
         return
@@ -220,6 +245,7 @@ def insertar_producto(nombre_db, nombre_producto, descripcion, cantidad, precio,
     if producto_existente:
         print(f"El producto '{nombre_producto}' ya existe en la base de datos.")
         conexion.close()
+        logging.warning(f"El producto '{nombre_producto}' ya existe en la base de datos.")
         return
 
     # Insertar el producto en la base de datos
@@ -231,6 +257,7 @@ def insertar_producto(nombre_db, nombre_producto, descripcion, cantidad, precio,
         conexion.commit()
        
         print(f"Producto '{nombre_producto}' insertado correctamente en la categoría '{categoria_nombre}'.")
+        logging.info(f"Producto '{nombre_producto}' insertado correctamente en la categoría '{categoria_nombre}'.")
     finally:
         conexion.close()
 
@@ -255,7 +282,7 @@ def mostrar_productos(nombre_db):
         INNER JOIN categorias cat ON prod.categoria_id = cat.id
     ''')
     productos = cursor.fetchall()
-
+    logging.info("Mostrando productos disponibles")
     if not productos:
         print("NO HAY PRODUCTOS DISPONIBLES.")
     else:
@@ -298,10 +325,11 @@ def modificar_producto(nombre_db, nombre_producto):
         WHERE prod.nombre = ?
     ''', (nombre_producto,))
     resultado = cursor.fetchone()
-
+    logging.info(f"Consultando producto: {nombre_producto} para actualizar")
     if not resultado:
         print(f"El producto '{nombre_producto}' no existe.")
         conexion.close()
+        logging.warning(f"El producto '{nombre_producto}' no existe.")
         return
 
     descripcion_actual, precio_actual, categoria_actual = resultado
@@ -323,6 +351,7 @@ def modificar_producto(nombre_db, nombre_producto):
         precio_final = float(nuevo_precio_input) if nuevo_precio_input else precio_actual
     except ValueError:
         print("Precio inválido. Se mantendrá el original.")
+        logging.warning("Precio inválido. Se mantendrá el original.")
         precio_final = precio_actual
 
     if nueva_categoria:
@@ -332,6 +361,7 @@ def modificar_producto(nombre_db, nombre_producto):
             categoria_id_final = categoria[0]
         else:
             print(f"La categoría '{nueva_categoria}' no existe. Se mantendrá la categoría original.")
+            logging.warning(f"La categoría '{nueva_categoria}' no existe. Se mantendrá la categoría original.")
             cursor.execute("SELECT id FROM categorias WHERE nombre = ?", (categoria_actual,))
             categoria_id_final = cursor.fetchone()[0]
     else:
@@ -367,10 +397,12 @@ def borrar_producto(nombre_db, nombre_producto):
     # Verificar si el producto existe
     cursor.execute("SELECT * FROM productos WHERE nombre = ?", (nombre_producto,))
     producto = cursor.fetchone()
+    logging.info(f"Consultando producto: {nombre_producto} para eliminar")
 
     if not producto:
         print(f"El producto '{nombre_producto}' no existe.")
         conexion.close()
+        logging.warning(f"El producto '{nombre_producto}' no existe.")
         return
 
     # Borrar el producto
@@ -378,6 +410,7 @@ def borrar_producto(nombre_db, nombre_producto):
     conexion.commit()
     conexion.close()
     print(f"Producto '{nombre_producto}' borrado.")
+    logging.info(f"Producto '{nombre_producto}' borrado.")
 
 def comprar_producto(nombre_db, nombre_producto, cantidad_compra):
     """
@@ -397,10 +430,12 @@ def comprar_producto(nombre_db, nombre_producto, cantidad_compra):
     # Verificar si el producto existe
     cursor.execute("SELECT cantidad FROM productos WHERE nombre = ?", (nombre_producto,))
     resultado = cursor.fetchone()
+    logging.info(f"Consultando producto: {nombre_producto} para actualizar stock")
 
     if not resultado:
         print(f"El producto '{nombre_producto}' no existe.")
         conexion.close()
+        logging.warning(f"El producto '{nombre_producto}' no existe.")
         return
 
     cantidad_actual = resultado[0]
@@ -408,6 +443,7 @@ def comprar_producto(nombre_db, nombre_producto, cantidad_compra):
 
     # Actualizar el stock
     cursor.execute("UPDATE productos SET cantidad = ? WHERE nombre = ?", (nueva_cantidad, nombre_producto))
+    logging.info(f"Actualizando stock del producto: {nombre_producto}")
 
     # Registrar movimiento
     momento = obtener_momento_actual(cursor)
@@ -415,7 +451,7 @@ def comprar_producto(nombre_db, nombre_producto, cantidad_compra):
         INSERT INTO movimientos (producto, tipo, cantidad, stock_resultante, momento)
         VALUES (?, 'compra', ?, ?, ?)
     ''', (nombre_producto, cantidad_compra, nueva_cantidad, momento))
-
+    logging.info(f"Registrando movimiento de compra para el producto: {nombre_producto}")
     conexion.commit()
     conexion.close()
     print(f"Se han agregado {cantidad_compra} unidades a '{nombre_producto}'. Nuevo stock: {nueva_cantidad}")
@@ -439,10 +475,12 @@ def vender_producto(nombre_db, nombre_producto, cantidad_venta):
     # Verificar si el producto existe
     cursor.execute("SELECT cantidad FROM productos WHERE nombre = ?", (nombre_producto,))
     resultado = cursor.fetchone()
+    logging.info(f"Consultando producto: {nombre_producto} para actualizar stock")
 
     if not resultado:
         print(f"El producto '{nombre_producto}' no existe.")
         conexion.close()
+        logging.warning(f"El producto '{nombre_producto}' no existe.")
         return
 
     cantidad_actual = resultado[0]
@@ -450,13 +488,14 @@ def vender_producto(nombre_db, nombre_producto, cantidad_venta):
     if cantidad_venta > cantidad_actual:
         print(f"No hay suficiente stock. Stock actual: {cantidad_actual}")
         conexion.close()
+        logging.warning(f"No hay suficiente stock para '{nombre_producto}'. Stock actual: {cantidad_actual}")
         return
 
     nueva_cantidad = cantidad_actual - cantidad_venta
 
     # Actualizar el stock
     cursor.execute("UPDATE productos SET cantidad = ? WHERE nombre = ?", (nueva_cantidad, nombre_producto))
-
+    logging.info(f"Actualizando stock del producto: {nombre_producto}")
     # Registrar movimiento
     momento = obtener_momento_actual(cursor)
     cursor.execute('''
@@ -489,9 +528,11 @@ def reporte_inventario(nombre_db):
 
     cursor.execute("SELECT nombre, cantidad, precio FROM productos")
     productos = cursor.fetchall()
+    logging.info("Consultando productos para reporte de inventario")
 
     if not productos:
         print("No existen productos registrados en el inventario.")
+        logging.warning("No existen productos registrados en el inventario.")
         conexion.close()
         return
 
@@ -540,6 +581,7 @@ def filtrar_productos(nombre_db):
     """
     conexion = sqlite3.connect(nombre_db)
     cursor = conexion.cursor()
+    logging.info("Conectado a la base de datos: {nombre_db} para filtrar productos")
 
     print("\n🔍 ¿Cómo deseas filtrar los productos?")
     print("1. Por categoría")
@@ -578,6 +620,7 @@ def filtrar_productos(nombre_db):
                 WHERE cantidad >= ?
             ''', (cantidad_min,))
         except ValueError:
+            logging.warning("Error: Debes ingresar un número válido para la cantidad.")
             print("Error: Debes ingresar un número válido para la cantidad.")
             conexion.close()
             return
@@ -589,8 +632,10 @@ def filtrar_productos(nombre_db):
     resultados = cursor.fetchall()
 
     if not resultados:
+        logging.warning("No se encontraron productos con ese criterio.")
         print("\nNo se encontraron productos con ese criterio.")
     else:
+        logging.info("Generando resultados de búsqueda")
         print("\nResultados de la búsqueda:")
         print("| {:<30} | {:<50} |".format("Nombre del Producto", "Descripción"))
         print("|" + "-"*32 + "|" + "-"*52 + "|")
@@ -627,7 +672,7 @@ def ver_ultimos_movimientos(nombre_db, num_movimientos):
     """
     conexion = sqlite3.connect(nombre_db)
     cursor = conexion.cursor()
-
+    logging.info(f"Conectado a la base de datos: {nombre_db} para ver últimos movimientos")
     cursor.execute('''
         SELECT producto, tipo, cantidad, stock_resultante, momento
         FROM movimientos
@@ -637,6 +682,7 @@ def ver_ultimos_movimientos(nombre_db, num_movimientos):
     movimientos = cursor.fetchall()
 
     if not movimientos:
+        logging.warning("No hay movimientos registrados.")
         print("No hay movimientos registrados.")
         conexion.close()
         return
@@ -668,7 +714,7 @@ def poblar_productos(nombre_db, productos):
     """
     conexion = sqlite3.connect(nombre_db)
     cursor = conexion.cursor()
-
+    logging.info(f"Conectado a la base de datos: {nombre_db} para poblar productos")
     for prod in productos:
         nombre = prod["nombre"]
         descripcion = prod["descripcion"]
@@ -711,6 +757,7 @@ def limpiar_base_datos(nombre_db):
     Returns:
         None
     """
+    logging.info(f"Conectado a la base de datos: {nombre_db} para limpiar base de datos")
     conexion = sqlite3.connect(nombre_db)
     cursor = conexion.cursor()
 
@@ -718,8 +765,10 @@ def limpiar_base_datos(nombre_db):
         cursor.execute("DELETE FROM movimientos")
         cursor.execute("DELETE FROM productos")
         cursor.execute("DELETE FROM categorias")
+        logging.info("Base de datos limpiada: movimientos, productos y categorias eliminados.")
         conexion.commit()
     except Exception as e:
+        logging.error(f"Error al limpiar la base de datos: {e}")
         print(f"Error al limpiar la base de datos: {e}")
     finally:
         conexion.close()
